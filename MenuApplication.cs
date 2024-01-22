@@ -23,38 +23,11 @@ namespace TopScore
 
             while(continuer)
             {
-                bool erreur = false;    // Afficher le message d'erreur
-
                 Console.WriteLine("=== Menu principal ===");
                 Console.WriteLine("Sélectionnez une option. Veuillez saisir le nombre devant la ).");
-                int indice = 1;
+                AfficherOptions();
 
-                foreach(KeyValuePair<string, Action<Requete>> option in options)
-                {
-                    Console.WriteLine($"{indice}) {option.Key}");
-                }
-                Console.WriteLine($"0) Quitter");
-
-                if(int.TryParse(Console.ReadLine(), out int choix))
-                {
-                    if(choix < 0 || choix > options.Count)
-                    {
-                        erreur = true;
-                    }
-
-                    if(choix == 0)
-                    {
-                        continuer = false;
-                    }
-                    else
-                    {
-                        options[choix - 1].Value.Invoke(new());
-                    }
-                }
-                else
-                {
-                    erreur = true;
-                }
+                TraiterChoix(out bool erreur, out continuer);
 
                 // Affiche le message d'erreur
                 if(erreur)
@@ -64,5 +37,57 @@ namespace TopScore
             }
         }
 
+        /// <summary>
+        /// Affiche les différentes options du menu
+        /// </summary>
+        private void AfficherOptions()
+        {
+            int indice = 1;
+
+            foreach(KeyValuePair<string, Action<Requete>> option in options)
+            {
+                Console.WriteLine($"{indice}) {option.Key}");
+            }
+            Console.WriteLine($"0) Quitter");
+        }
+
+        /// <summary>
+        /// Traite le choix que l'utilisateur a fait dans le menu
+        /// </summary>
+        /// <param name="erreur">Indique s'il y a eu une erreur dans le traitement de la saisie</param>
+        /// <param name="continuer">Indique si le menu doit se répéter</param>
+        private void TraiterChoix(out bool erreur, out bool continuer)
+        {
+            erreur = false;
+            continuer = true;
+
+            if(int.TryParse(Console.ReadLine(), out int choix))
+            {
+                // Choix hors des valeurs valides
+                if(choix < 0 || choix > options.Count)
+                {
+                    erreur = true;
+                }
+
+                
+                if(choix == 0)
+                {
+                    // Quitter
+                    continuer = false;
+                }
+                else
+                {
+                    // Exécute la méthode liée à l'autre choix
+                    options[choix - 1].Value.Invoke(new());
+                }
+            }
+            else
+            {
+                erreur = true;
+            }
+        }
+
     }
+
+
 }
