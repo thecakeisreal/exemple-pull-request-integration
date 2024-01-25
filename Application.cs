@@ -13,6 +13,10 @@
         {
             MenuApplication menu = new();
             menu.Afficher(new());
+
+
+            DAOAbstraite dAOAbstraite = new DAOAbstraite();
+            dAOAbstraite.TestBaseDonnees();
         }
     }
 }
