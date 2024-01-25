@@ -11,11 +11,8 @@
         /// <param name="args">Arguments fournis au programme, actuellement inutilisé</param>
         static void Main(string[] args)
         {
-            DAOAbstraite dAOAbstraite = new DAOAbstraite();
-            dAOAbstraite.TestBaseDonnees();
-
-            /*MenuApplication menu = new();
-            menu.Afficher(new());*/
+            MenuApplication menu = new();
+            menu.Afficher(new());
 
 
             
