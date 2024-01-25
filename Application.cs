@@ -13,6 +13,9 @@
         {
             MenuApplication menu = new();
             menu.Afficher(new());
+
+
+            
         }
     }
 }
