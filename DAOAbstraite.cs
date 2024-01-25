@@ -11,7 +11,7 @@ namespace TopScore
     {
         public void TestBaseDonnees()
         {
-            using var connection = new SqliteConnection("Data Source=hello.db");
+            using var connection = new SqliteConnection("Data Source=donnees.db");
             connection.Open();
 
             var command = connection.CreateCommand();
