@@ -13,7 +13,7 @@
         {
             MenuApplication menu = new();
             menu.Afficher();
-
+   
         }
     }
 }
