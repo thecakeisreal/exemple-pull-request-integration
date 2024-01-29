@@ -44,11 +44,10 @@ namespace TopScore
         /// </summary>
         private void AfficherOptions()
         {
-            int indice = 1;
-
-            foreach (Tuple<string, Func<Requete, Vue>> option in options)
+            for (int i = 0; i < options.Count;i++)
             {
-                Console.WriteLine($"{indice}) {option.Item1}");
+                Tuple<string, Func<Requete, Vue>> option = options[i];
+                Console.WriteLine($"{i + 1}) {option.Item1}");
             }
             Console.WriteLine($"0) Quitter");
         }
