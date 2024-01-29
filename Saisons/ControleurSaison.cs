@@ -25,14 +25,24 @@ namespace TopScore.Saisons
             }
             else
             {
-                Saison saison = new();
-                requete.LierObjet(saison);
-                new DAOSaison().Enregistrer(saison);
+                try
+                {
+                    Saison saison = new();
+                    requete.LierObjet(saison);
+                    new DAOSaison().Enregistrer(saison);
 
-                return new MessageConfirmation(new Dictionary<string, object> {
-                    { "Code", 0 },
-                    { "Message", "La saison a été ajoutée avec succès !" }
-                });
+                    return new MessageConfirmation(new Dictionary<string, object> {
+                        { "Code", 0 },
+                        { "Message", "La saison a été ajoutée avec succès !" }
+                    });
+                }
+                catch (Exception exception)
+                {
+                    return new MessageConfirmation(new Dictionary<string, object> {
+                        { "Code", 2 },
+                        { "Message", $"Une erreur est survenue pendant l'ajout !\n{exception.Message}" }
+                    });
+                }
             }
         }
 
