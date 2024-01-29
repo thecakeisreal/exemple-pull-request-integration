@@ -14,7 +14,8 @@ namespace TopScore
         /// </summary>
         private static readonly List<Tuple<string, Func<Requete, Vue>>> options = new()
         {
-            Tuple.Create("Ajouter une saison", new ControleurSaison().AjouterSaison)
+            Tuple.Create("Lister les saisons", new ControleurSaison().ListerSaisons),
+            Tuple.Create("Ajouter une saison", new ControleurSaison().AjouterSaison),
         };
 
         /// <inheritdoc/>

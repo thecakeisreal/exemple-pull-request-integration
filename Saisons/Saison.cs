@@ -5,7 +5,7 @@ namespace TopScore.Saisons
     /// <summary>
     /// Saison dans laquelle les parties ont lieu
     /// </summary>
-    internal class Saison
+    internal class Saison : Entite
     {
         /// <summary>
         /// Date de début de la saison

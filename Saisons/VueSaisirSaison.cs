@@ -19,6 +19,8 @@ namespace TopScore.Saisons
 
         public override Requete Afficher()
         {
+            Console.WriteLine("=== Ajouter une nouvelle saison ===");
+
             // Saisie des champs
             DateOnly dateDebut = SaisirDate("Quelle est la date de début ?", donnees.GetValueOrDefault("Debut") as DateOnly?);
             DateOnly dateFin = SaisirDate("Quelle est la date de fin ?", donnees.GetValueOrDefault("Fin") as DateOnly?);
