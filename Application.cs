@@ -12,10 +12,8 @@
         static void Main(string[] args)
         {
             MenuApplication menu = new();
-            menu.Afficher(new());
-
-
-            
+            menu.Afficher();
+   
         }
     }
 }

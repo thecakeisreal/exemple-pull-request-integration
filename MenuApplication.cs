@@ -1,27 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using TopScore.Saisons;
 
 namespace TopScore
 {
     /// <summary>
     /// Affiche le menu principal de l'application. L'utilisateur peut sélectionner une option
     /// </summary>
-    internal class MenuApplication : Vue
+    internal class MenuApplication
     {
         /// <summary>
         /// Option du menu avec la string (affiché à l'utilisateur) et le délégué, l'action effectuée.
         /// </summary>
-        private static readonly List<KeyValuePair<string, Action<Requete>>> options = new()
+        private static readonly List<Tuple<string, Func<Requete, Vue>>> options = new()
         {
-
+            Tuple.Create("Lister les saisons", new ControleurSaison().ListerSaisons),
+            Tuple.Create("Ajouter une saison", new ControleurSaison().AjouterSaison),
         };
 
         /// <inheritdoc/>
-        public override void Afficher(Dictionary<string, object> donnees)
+        public void Afficher()
         {
             bool continuer = true;      // Continuer l'exécution du menu après la fonctionnalité
 
-            while(continuer)
+            while (continuer)
             {
                 Console.WriteLine("=== Menu principal ===");
                 Console.WriteLine("Sélectionnez une option. Veuillez saisir le nombre devant la ).");
@@ -30,7 +32,7 @@ namespace TopScore
                 TraiterChoix(out bool erreur, out continuer);
 
                 // Affiche le message d'erreur
-                if(erreur)
+                if (erreur)
                 {
                     Console.WriteLine($"La valeur saisie ne correspond à aucune option valide. Veuillez saisir le nombre devant la ).");
                 }
@@ -44,9 +46,9 @@ namespace TopScore
         {
             int indice = 1;
 
-            foreach(KeyValuePair<string, Action<Requete>> option in options)
+            foreach (Tuple<string, Func<Requete, Vue>> option in options)
             {
-                Console.WriteLine($"{indice}) {option.Key}");
+                Console.WriteLine($"{indice}) {option.Item1}");
             }
             Console.WriteLine($"0) Quitter");
         }
@@ -61,16 +63,16 @@ namespace TopScore
             erreur = false;
             continuer = true;
 
-            if(int.TryParse(Console.ReadLine(), out int choix))
+            if (int.TryParse(Console.ReadLine(), out int choix))
             {
                 // Choix hors des valeurs valides
-                if(choix < 0 || choix > options.Count)
+                if (choix < 0 || choix > options.Count)
                 {
                     erreur = true;
                 }
 
-                
-                if(choix == 0)
+
+                if (choix == 0)
                 {
                     // Quitter
                     continuer = false;
@@ -78,7 +80,13 @@ namespace TopScore
                 else
                 {
                     // Exécute la méthode liée à l'autre choix
-                    options[choix - 1].Value.Invoke(new());
+                    Requete requete = new(options[choix - 1].Item2);
+
+                    while (requete != null)
+                    {
+                        requete = requete.Executer();
+                    }
+
                 }
             }
             else
@@ -86,7 +94,6 @@ namespace TopScore
                 erreur = true;
             }
         }
-
     }
 
 
