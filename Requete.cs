@@ -11,20 +11,32 @@ namespace TopScore
     internal class Requete
     {
         /// <summary>
-        /// Données qui sont communiquées entre les vues et les contrôleurs
+        /// Données qui sont communiquées entre les vues et les contrôleurs.
         /// </summary>
         public Dictionary<string, object> Donnees { get; private set; }
 
         /// <summary>
+        /// Fonction exécuter lors de la requête.
+        /// </summary>
+        public Func<Requete, Vue> Fonction { get; private set; }
+
+        /// <summary>
+        /// Indique si le dictionnaire possède ou non des données.
+        /// </summary>
+        public bool PossedeDonnees => Donnees.Count > 0;
+
+        /// <summary>
         /// Crée une nouvelle requête
         /// </summary>
-        public Requete()
+        /// <param name="fonction">La fonction à exécuter dans la requête.</param>
+        public Requete(Func<Requete, Vue> fonction)
         {
             Donnees = new();
+            Fonction = fonction;
         }
 
         /// <summary>
-        /// Ajoute une donnée traitée par la requête
+        /// Ajoute une donnée traitée par la requête.
         /// </summary>
         /// <param name="cle">La clé associé à la donnée. Utiliser le nom de la propriété pour permettre la liaison automatique.</param>
         /// <param name="valeur">La clé associé à la donnée.</param>
@@ -40,7 +52,18 @@ namespace TopScore
         }
 
         /// <summary>
-        /// Lie les données contenues dans la requête à l'objet donné
+        /// Exécute la requête puis retourne la prochaine requête à exécuter. La requête est nulle pour un retour au menu principal.
+        /// </summary>
+        /// <param name="requete">La requete à exécuter.</param>
+        /// <returns>La prochaine requête à exécuter, ou null pour le menu principal.</returns>
+        public Requete Executer()
+        {
+            Vue vue = Fonction.Invoke(this);
+            return vue.Afficher();
+        }
+
+        /// <summary>
+        /// Lie les données contenues dans la requête à l'objet donné.
         /// </summary>
         /// <typeparam name="T">Le type de l'objet lié. Il doit s'agir d'une classe.</typeparam>
         /// <param name="objet">L'objet qui est lié aux données.</param>
