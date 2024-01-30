@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TopScore.MessagesConfirmation;
 
 namespace TopScore.Saisons
 {
@@ -31,15 +32,11 @@ namespace TopScore.Saisons
                     requete.LierObjet(saison);
                     new DAOSaison().Enregistrer(saison);
 
-                    return new MessageConfirmation(new Dictionary<string, object> {
-                        { "Code", 0 },
-                        { "Message", "La saison a été ajoutée avec succès !" }
-                    });
+                    return new MessageSucces("La saison a été ajoutée avec succès !");
                 }
                 catch (Exception exception)
                 {
-                    return new MessageConfirmation(new Dictionary<string, object> {
-                        { "Code", 2 },
+                    return new MessageErreur(new Dictionary<string, object> {
                         { "Message", $"Une erreur est survenue pendant l'ajout !\n{exception.Message}" }
                     });
                 }

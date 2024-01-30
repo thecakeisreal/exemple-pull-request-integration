@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 
 
-namespace TopScore
+namespace TopScore.MessagesConfirmation
 {
     /// <summary>
     /// Gère les messages de confirmation
     /// </summary>
-    internal class MessageConfirmation : Vue
+    internal abstract class MessageConfirmation : Vue
     {
-        /// <inheritdoc/>
-        public MessageConfirmation(Dictionary<string, object> donnees) : base(donnees)
+        /// <summary>
+        /// Constructeur qui accepte le message
+        /// </summary>
+        /// <param name="message">Le message à afficher</param>
+        public MessageConfirmation(string message) : base(
+            new Dictionary<string, object>{{ "Message", message }})
         {
 
         }
@@ -18,7 +22,7 @@ namespace TopScore
         /// <inheritdoc/>
         public override Requete Afficher()
         {
-            switch ((int)donnees["Code"])
+            /*switch ((int)donnees["Code"])
             {
                 case 0:
                     Console.ForegroundColor = ConsoleColor.Green;
@@ -32,10 +36,10 @@ namespace TopScore
                 default:
                     Console.ForegroundColor = ConsoleColor.Blue;
                     break;
-            }
+            }*/
 
             Console.WriteLine(donnees["Message"]);
-            Console.ForegroundColor = ConsoleColor.Gray; 
+            Console.ForegroundColor = ConsoleColor.Gray;
             return null;
         }
     }
