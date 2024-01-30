@@ -10,9 +10,9 @@ namespace TopScore.MessagesConfirmation
     internal abstract class MessageConfirmation : Vue
     {
         /// <summary>
-        /// 
+        /// Constructeur qui accepte le message
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="message">Le message à afficher</param>
         public MessageConfirmation(string message) : base(
             new Dictionary<string, object>{{ "Message", message }})
         {
